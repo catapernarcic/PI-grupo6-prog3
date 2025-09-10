@@ -8,7 +8,8 @@ class Series extends Component{
       super(props)
       this.state ={
         series: [],
-        API_KEY: "21945569abcb8b8f35ad5e0c66a9d763"
+        API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
+        sigPag: 1
       }
     }
     componentDidMount(){
@@ -19,13 +20,23 @@ class Series extends Component{
       }))
       .catch((error) => console.log(error))
   }
+  cargarMas(){
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.state.API_KEY}&page=${this.state.sigPag}`) 
+    .then((resp) => resp.json())
+    .then((data) => this.setState({
+          series: this.state.series.concat(data.results),
+          sigPag: this.state.sigPag + 1
 
+      }))
+      .catch((error) => console.log(error))
+  }
 
     render(){
         return(
             <React.Fragment>
-                <p>series</p>
+                <h1>Todas las series: </h1>
                 {<Serie series={this.state.series}/>}
+                <button onClick={()=> this.cargarMas()}> Cargar mas!</button>
             </React.Fragment>
         )
     }

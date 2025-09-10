@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import TarjetaS from '../TarjetaS/TarjetaS'
+import './Serie.css'
 
 class Serie extends Component {
     constructor(props){
@@ -13,7 +14,7 @@ class Serie extends Component {
         <React.Fragment>
             <section className="sectionSeries">
                 {
-                    this.props.series.map((elm, idx) => <TarjetaS key={elm + idx} nombre={elm.name}/>)
+                    this.props.series.map((elm, idx) => <TarjetaS key={elm + idx} nombre={elm.name} img={elm.poster_path} overview={elm.overview}/>)
                 }
 
                 </section>

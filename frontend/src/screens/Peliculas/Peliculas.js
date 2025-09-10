@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Link} from 'react-router-dom'
 import Pelicula from '../../Components/Pelicula/Pelicula'
-
-
+import './Peliculas.css'
+import FormularioP from'../../Components/FormularioP/FormularioP'
 
 class Peliculas extends Component{
 
@@ -10,7 +10,9 @@ class Peliculas extends Component{
       super(props)
       this.state ={
         peliculas: [],
-        API_KEY: "21945569abcb8b8f35ad5e0c66a9d763"
+        API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
+        sigPag: 1,
+        backup: []
       }
     
     }
@@ -20,16 +22,39 @@ class Peliculas extends Component{
       .then((resp) => resp.json())
       .then((data) => this.setState({
           peliculas: data.results,
+          sigPag: this.state.sigPag + 1,
+          backup: data.results
+          
       }))
       .catch((error) => console.log(error))
   }
+    cargarMas(){
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.state.API_KEY}&page=${this.state.sigPag}`) 
+    .then((resp) => resp.json())
+    .then((data) => this.setState({
+          peliculas: this.state.peliculas.concat(data.results),
+          sigPag: this.state.sigPag + 1,
+          backup: this.state.backup.concat(data.results)
+
+      }))
+      .catch((error) => console.log(error))
+  }
+  buscadas(peliBuscada){
+    const texto = peliBuscada.toLowerCase()
+    const filtrado = this.state.backup.filter( (elm) => elm.title.toLowerCase().includes(texto))
+    this.setState({
+        peliculas: filtrado
+    })
+    }
 
       render(){
         return(
-            <React.Fragment>
-                <p>peliculas</p>
-                {<Pelicula peliculas={this.state.peliculas}/>}
 
+            <React.Fragment>
+                <h1>Todas las peliculas:</h1>
+                <FormularioP filtrados={(texto) => this.buscadas(texto)}/>
+                {<Pelicula peliculas={this.state.peliculas}/>}
+                <button onClick={()=> this.cargarMas()}> Cargar mas!</button>
             </React.Fragment>
 
         )

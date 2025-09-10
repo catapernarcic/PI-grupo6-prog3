@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import './headerStyle.css'
 
 function Header() {
     
@@ -7,7 +8,7 @@ function Header() {
 
   return (
     <nav>
-        <p>el header va a tener un nav con el logo, home, series, peliculas, favs</p>
+        <img src="/img/logo.jpg" alt="logo" className="logo"></img>
         <ul className="main-nav">
            {OpcionesMenu.map( (opcion, idx) => <li key={opcion + idx}>{opcion.frag}</li>)}
         </ul>
