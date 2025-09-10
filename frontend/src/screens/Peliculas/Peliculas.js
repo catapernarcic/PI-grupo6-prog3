@@ -54,7 +54,10 @@ class Peliculas extends Component{
                 <h1>Todas las peliculas:</h1>
                 <FormularioP filtrados={(texto) => this.buscadas(texto)}/>
                 {<Pelicula peliculas={this.state.peliculas}/>}
-                <button onClick={()=> this.cargarMas()}> Cargar mas!</button>
+                <section className="seccionBoton">
+                  <button onClick={()=> this.cargarMas()} className="boton"> Cargar mas!</button>
+                </section>
+                
             </React.Fragment>
 
         )

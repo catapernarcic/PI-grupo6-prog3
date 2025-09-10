@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
+import './Formulario.css'
 
 class FormularioP extends Component {
   constructor(props){
@@ -22,7 +23,7 @@ class FormularioP extends Component {
       render(){
           return(
               <React.Fragment>
-              <form onSubmit={(evento)=> this.controlarForm(evento)}>
+              <form  className="formulario" onSubmit={(evento)=> this.controlarForm(evento)}>
               <input onChange={(evento) => this.controlarInput(evento)} />
               <button>Buscar peliculas</button>
               </form>

@@ -1,10 +1,9 @@
-.seccionBoton{
+.divF{
     display: flex;
     align-items: center;
     justify-content: center;
     height:100px;
 }
-
-.boton{
+.footer{
     padding: 10px 12px;
 }

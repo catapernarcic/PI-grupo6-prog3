@@ -5,8 +5,9 @@ import Home from './screens/Home/Home'
 import Peliculas from './screens/Peliculas/Peliculas'
 import Series from './screens/Series/Series'
 import Favs from './screens/Favs/Favs'
-import Resultados from "./screens/Resultados/Resultados"
-
+import Resultados from "./screens/Resultados/Resultados";
+import NotFound from './screens/NF/NF'
+import Footer from './Components/Footer/Footer'
 function App() {
   return (
     <React.Fragment>    
@@ -17,7 +18,10 @@ function App() {
         <Route path='/series' component={Series} exact={true}/> 
         <Route path='/favs' component={Favs} exact={true}/> 
         <Route path="/resultados:busqueda" component={Resultados} exact={true}/>
+        <Route component={NotFound}/>
+
       </Switch>
+      <Footer />
     </React.Fragment>
 
   );
