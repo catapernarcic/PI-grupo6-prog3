@@ -34,7 +34,9 @@ class Home extends Component{
         return(
             <div className="container">
                 <h2 class="alert alert-primary">Popular movies this week</h2>
-                <Pelicula peliculas={this.state.peliculasPopulares} />
+                {this.state.cargandoPopulares ? <p>Cargando</p> : <Pelicula peliculas={this.state.peliculasPopulares.splice(0,5)}/>}
+                <h2 class="alert alert-primary">Cartelera movies this week</h2>
+                {this.state.cargandoCartelera ? <p>Cargando</p> : <Pelicula peliculas={this.state.peliculasCartelera.splice(0,5)}/>}
             </div>
         )
     }

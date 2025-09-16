@@ -13,7 +13,7 @@ class Pelicula extends Component {
         <React.Fragment>
             <section className="sectionPeliculas">
                 {
-                    this.props.peliculas.map((elm, idx) => <TarjetaP key={elm + idx} nombre={elm.title} img={elm.poster_path} overview={elm.overview}/>)
+                    this.props.peliculas.map((elm, idx) => <TarjetaP key={elm + idx} id={elm.id} nombre={elm.title} img={elm.poster_path} overview={elm.overview}/>)
                 }
 
                 </section>
