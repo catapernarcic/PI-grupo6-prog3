@@ -47,7 +47,6 @@ class Series extends Component{
         return(
             <React.Fragment>
                 <h1>Todas las series: </h1>
-                <FormularioP filtrados={(texto) => this.buscadas(texto)}/>
                 {<Serie series={this.state.series}/>}
                 <section className="seccionBoton">
                   <button onClick={()=> this.cargarMas()}> Cargar mas!</button>
