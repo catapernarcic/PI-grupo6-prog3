@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Pelicula from '../../Components/Pelicula/Pelicula';
+import { Link } from 'react-router-dom';
+import './Home.css';
 
 let apiKey = "0b687acd5250ddef9e6794dc722be275";
 
@@ -32,12 +34,15 @@ class Home extends Component{
     }
     render(){
         return(
-            <div className="container">
-                <h2 class="alert alert-primary">Popular movies this week</h2>
-                {this.state.cargandoPopulares ? <p>Cargando</p> : <Pelicula peliculas={this.state.peliculasPopulares.splice(0,5)}/>}
-                <h2 class="alert alert-primary">Cartelera movies this week</h2>
-                {this.state.cargandoCartelera ? <p>Cargando</p> : <Pelicula peliculas={this.state.peliculasCartelera.splice(0,5)}/>}
-            </div>
+            <React.Fragment>
+                {/* Sección Películas Populares */}
+                <h2 className="alert alert-primary">Popular movies this week</h2>
+                {this.state.cargandoPopulares ? <p>Cargando...</p> : <Pelicula peliculas={this.state.peliculasPopulares.slice(0,4)}/>}
+
+                {/* Sección Películas en Cartelera */}
+                <h2 className="alert alert-primary">Movies now playing</h2>
+                {this.state.cargandoCartelera ? <p>Cargando...</p> : <Pelicula peliculas={this.state.peliculasCartelera.slice(0,4)}/>}
+            </React.Fragment>
         )
     }
 }

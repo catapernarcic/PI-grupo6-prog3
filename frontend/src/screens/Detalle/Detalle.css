@@ -1,0 +1,60 @@
+/* Estilos para la página de Detalle */
+
+.detalle-container {
+    padding: 1rem;
+}
+
+.detalle-imagen {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.detalle-info {
+    padding: 1rem;
+}
+
+.detalle-info h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.detalle-info p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.detalle-info strong {
+    color: #007bff;
+}
+
+.detalle-boton {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.detalle-boton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detalle-imagen {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .detalle-info {
+        padding: 0.5rem;
+    }
+}

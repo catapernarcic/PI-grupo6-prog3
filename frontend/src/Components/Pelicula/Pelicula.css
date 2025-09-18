@@ -1,5 +1,9 @@
-.sectionPeliculas{
+/* Estilos para el componente Pelicula */
+
+.sectionPeliculas {
     display: flex;
-    flex-wrap: wrap;        
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 1rem;
 }

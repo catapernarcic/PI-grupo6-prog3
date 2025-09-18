@@ -11,7 +11,8 @@ import NotFound from './screens/NF/NF'
 import Footer from './Components/Footer/Footer'
 function App() {
   return (
-    <React.Fragment>    
+    <div className="container">
+      <h1>UdeSA Movies</h1>
       <Header /> 
       <Switch>
         <Route path='/' component={Home} exact={true}/> 
@@ -19,13 +20,11 @@ function App() {
         <Route path='/series' component={Series} exact={true}/> 
         <Route path='/detalle/:tipo/:id' component={Detalle} exact={true}/>
         <Route path='/favs' component={Favs} exact={true}/> 
-        <Route path="/resultados:busqueda" component={Resultados} exact={true}/>
+        <Route path="/resultados/:busqueda" component={Resultados} exact={true}/>
         <Route component={NotFound}/>
-
       </Switch>
       <Footer />
-    </React.Fragment>
-
+    </div>
   );
 }
 
