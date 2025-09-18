@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import './Favs.css';
+import './Favoritos.css';
 
-class Favs extends Component {
+class Favoritos extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -113,4 +113,4 @@ class Favs extends Component {
     }
 }
 
-export default Favs;
+export default Favoritos;

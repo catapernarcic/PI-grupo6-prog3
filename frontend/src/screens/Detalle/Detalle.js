@@ -19,7 +19,8 @@ class Detalle extends Component{
       fetch(`https://api.themoviedb.org/3/${this.props.match.params.tipo}/${this.props.match.params.id}?api_key=${apiKey}`)
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data)
+        console.log('Datos de la película/serie:', data)
+        console.log('Poster path:', data.poster_path)
         this.setState({
           pelicula: data,
           cargando: false,
@@ -75,11 +76,31 @@ class Detalle extends Component{
                 <h2 className="alert alert-primary">{this.props.match.params.tipo==="movie" ? this.state.pelicula.title : this.state.pelicula.name}</h2>
                 <section className="row">
                     <div className="col-md-6">
-                        <img 
-                            className="detalle-imagen" 
-                            src={`https://image.tmdb.org/t/p/w500/${this.state.pelicula.poster_path}`} 
-                            alt={this.props.match.params.tipo==="movie" ? this.state.pelicula.title : this.state.pelicula.name}
-                        />
+                        {this.state.pelicula.poster_path ? (
+                            <img 
+                                className="detalle-imagen" 
+                                src={`https://image.tmdb.org/t/p/w500${this.state.pelicula.poster_path}`} 
+                                alt={this.props.match.params.tipo==="movie" ? this.state.pelicula.title : this.state.pelicula.name}
+                                onError={(e) => {
+                                    e.target.src = 'https://via.placeholder.com/400x600/cccccc/666666?text=Sin+Imagen';
+                                }}
+                            />
+                        ) : (
+                            <div className="detalle-imagen" style={{
+                                width: '100%',
+                                maxWidth: '400px',
+                                height: '600px',
+                                backgroundColor: '#f0f0f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: '8px',
+                                color: '#666',
+                                fontSize: '1.2rem'
+                            }}>
+                                Sin imagen disponible
+                            </div>
+                        )}
                     </div>
                     <section className="col-md-6 detalle-info">
                         <h3>Descripción</h3>
