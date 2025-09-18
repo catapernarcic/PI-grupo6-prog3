@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Pelicula from '../../Components/Pelicula/Pelicula'
+import Loader from '../../Components/Loader/Loader';
 
 let apiKey = "0b687acd5250ddef9e6794dc722be275";
 
@@ -48,7 +49,7 @@ export default class Resultados extends Component {
             <div className="container">
                 <h1>Resultados de búsqueda: "{this.state.busqueda}"</h1>
                 {this.state.cargando ? (
-                    <p>Cargando resultados...</p>
+                      <Loader />
                 ) : (
                     <div>
                         {this.state.resultados.length > 0 ? (

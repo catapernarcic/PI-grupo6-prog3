@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import './Favoritos.css';
+import Loader from "../../Components/Loader/Loader";
 
 class Favoritos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            favoritos: []
+            favoritos: [],
+            cargando: true
         }
     }
 
@@ -16,7 +18,7 @@ class Favoritos extends Component {
 
     cargarFavoritos = () => {
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-        this.setState({ favoritos });
+        this.setState({ favoritos: favoritos, cargando: false });
     }
 
     eliminarFavorito = (id, tipo) => {
@@ -27,6 +29,10 @@ class Favoritos extends Component {
     }
 
     render() {
+
+        if (this.state.cargando) {       
+        return <Loader />;             
+        }
         const { favoritos } = this.state;
         const peliculasFavoritas = favoritos.filter(fav => fav.tipo === 'movie');
         const seriesFavoritas = favoritos.filter(fav => fav.tipo === 'tv');

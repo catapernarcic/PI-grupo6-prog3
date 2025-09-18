@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import Serie from '../../Components/Serie/Serie'
 import FormularioP from'../../Components/FormularioP/FormularioP'
 import './series.css'
+import Loader from "../../Components/Loader/Loader";
 
 class Series extends Component{
     constructor(props){
@@ -11,10 +12,12 @@ class Series extends Component{
         series: [],
         API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
         sigPag: 1,
-        backup: []
+        backup: [],
+         cargando: true
       }
     }
     componentDidMount(){
+      this.setState({ cargando: true });
       fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${this.state.API_KEY}`)
       .then((resp) => resp.json())
       .then((data) => this.setState({
@@ -22,7 +25,11 @@ class Series extends Component{
           backup: data.results,
           sigPag: this.state.sigPag + 1
       }))
-      .catch((error) => console.log(error))
+      .then(() => this.setState({ cargando: false }))
+       .catch((error) => {
+        console.log(error);
+        this.setState({ cargando: false });
+      })
   }
   cargarMas(){
     fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${this.state.API_KEY}&page=${this.state.sigPag}`) 
@@ -44,6 +51,9 @@ class Series extends Component{
   }
 
     render(){
+       if (this.state.cargando){        
+          return <Loader />;             
+        }
         return(
             <React.Fragment>
                 <h1>Todas las series: </h1>

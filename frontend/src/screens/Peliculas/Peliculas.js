@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import Pelicula from '../../Components/Pelicula/Pelicula'
 import './Peliculas.css'
 import FormularioP from'../../Components/FormularioP/FormularioP'
+import Loader from "../../Components/Loader/Loader";
 
 class Peliculas extends Component{
 
@@ -12,12 +13,14 @@ class Peliculas extends Component{
         peliculas: [],
         API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
         sigPag: 1,
-        backup: []
+        backup: [],
+         cargando: true
       }
     
     }
     
     componentDidMount(){
+      this.setState({ cargando: true })
       fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.state.API_KEY}`)
       .then((resp) => resp.json())
       .then((data) => this.setState({
@@ -26,7 +29,12 @@ class Peliculas extends Component{
           backup: data.results
           
       }))
-      .catch((error) => console.log(error))
+      .then(() => this.setState({ cargando: false })) 
+      .catch((error) => {
+        console.log(error)
+        this.setState({ cargando: false }) 
+      })
+     
   }
     cargarMas(){
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.state.API_KEY}&page=${this.state.sigPag}`) 
@@ -48,6 +56,10 @@ class Peliculas extends Component{
     }
 
       render(){
+         if (this.state.cargando){         
+        return <Loader />               
+        }
+        
         return(
 
             <React.Fragment>

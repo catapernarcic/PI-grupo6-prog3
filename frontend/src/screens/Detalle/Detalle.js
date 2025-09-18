@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import './Detalle.css';
+import Loader from "../../Components/Loader/Loader";
 
 
 let apiKey = "0b687acd5250ddef9e6794dc722be275";
@@ -27,7 +28,11 @@ class Detalle extends Component{
           esFavorito: this.verificarFavorito(data.id)
       })
     })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        this.setState({ cargando: false }) 
+      })
+     
   }
 
   verificarFavorito = (id) => {
@@ -68,7 +73,7 @@ class Detalle extends Component{
 
       render(){
         if(this.state.cargando){
-          return <p>Cargando...</p>
+          return <Loader/>
         }
         
         return(
