@@ -19,7 +19,7 @@ class Header extends Component {
     }
 
     render() {
-        let OpcionesMenu = [{frag: <Link to='/'> Home </Link>}, {frag: <Link to='/peliculas'> Peliculas </Link>}, {frag: <Link to='/series'> Series </Link>}, {frag: <Link to='/favs'> Favoritos </Link>}]
+        let OpcionesMenu = [{frag: <Link to='/'> Home </Link>}, {frag: <Link to='/peliculas'> Peliculas </Link>}, {frag: <Link to='/series'> Series </Link>}, {frag: <Link to='/favoritos'> Favoritos </Link>}]
 
         return (
             <nav>
