@@ -14,7 +14,8 @@ class Peliculas extends Component{
         API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
         sigPag: 1,
         backup: [],
-         cargando: true
+        cargando: true,
+        filtrando: false
       }
     
     }
@@ -51,7 +52,8 @@ class Peliculas extends Component{
     const texto = peliBuscada.toLowerCase()
     const filtrado = this.state.backup.filter( (elm) => elm.title.toLowerCase().includes(texto))
     this.setState({
-        peliculas: filtrado
+        peliculas: filtrado,
+        filtrando: texto.length > 0
     })
     }
 
@@ -64,11 +66,13 @@ class Peliculas extends Component{
 
             <React.Fragment>
                 <h1>Todas las peliculas:</h1>
-                <FormularioP filtrados={(texto) => this.buscadas(texto)}/>
+                <FormularioP tipo="peliculas" filtrados={(texto) => this.buscadas(texto)}/>
                 {<Pelicula peliculas={this.state.peliculas}/>}
-                <section className="seccionBoton">
-                  <button onClick={()=> this.cargarMas()} className="boton"> Cargar mas!</button>
-                </section>
+                {!this.state.filtrando && (
+                    <section className="seccionBoton">
+                      <button onClick={()=> this.cargarMas()} className="boton"> Cargar mas</button>
+                    </section>
+                )}
                 
             </React.Fragment>
 

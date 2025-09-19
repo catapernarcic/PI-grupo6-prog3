@@ -34,7 +34,7 @@ class Header extends Component {
                         value={this.state.busqueda}
                         onChange={this.controlarCambios}
                     />
-                    <Link to={`/resultados/${this.state.busqueda}`} className="btn btn-success btn-sm">Buscar</Link>
+                    <Link to={`/resultados/todo/${this.state.busqueda}`} className="btn btn-success btn-sm">Buscar</Link>
                 </form>
             </nav>
         );

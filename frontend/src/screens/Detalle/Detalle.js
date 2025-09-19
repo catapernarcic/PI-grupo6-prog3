@@ -112,7 +112,9 @@ class Detalle extends Component{
                         <h3>Descripción</h3>
                         <p className="description">{this.state.pelicula.overview}</p>
                         <p><strong>Fecha de estreno:</strong> {this.state.pelicula.release_date}</p>
-                        <p><strong>Duración:</strong> {this.props.match.params.tipo==="movie" ? this.state.pelicula.runtime + " minutos" : "Serie"}</p>
+                        {this.props.match.params.tipo === "movie" && (
+                            <p><strong>Duración:</strong> {this.state.pelicula.runtime} minutos</p>
+                        )}
                         <p><strong>Puntuación:</strong> {this.state.pelicula.vote_average}/10</p>
                         <p><strong>Géneros:</strong> {this.state.pelicula.genres && this.state.pelicula.genres.map(genero => genero.name).join(', ')}</p>
                         

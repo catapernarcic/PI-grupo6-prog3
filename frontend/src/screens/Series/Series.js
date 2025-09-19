@@ -13,7 +13,8 @@ class Series extends Component{
         API_KEY: "21945569abcb8b8f35ad5e0c66a9d763",
         sigPag: 1,
         backup: [],
-         cargando: true
+        cargando: true,
+        filtrando: false
       }
     }
     componentDidMount(){
@@ -46,7 +47,8 @@ class Series extends Component{
     const texto = serieBuscada.toLowerCase()
     const filtrado = this.state.backup.filter( (elm) => elm.name.toLowerCase().includes(texto))
     this.setState({
-        series: filtrado
+        series: filtrado,
+        filtrando: texto.length > 0
     })
   }
 
@@ -57,10 +59,13 @@ class Series extends Component{
         return(
             <React.Fragment>
                 <h1>Todas las series: </h1>
+                <FormularioP tipo="series" filtrados={(texto) => this.buscadas(texto)}/>
                 {<Serie series={this.state.series}/>}
-                <section className="seccionBoton">
-                  <button onClick={()=> this.cargarMas()}> Cargar mas!</button>
-                </section>
+                {!this.state.filtrando && (
+                    <section className="seccionBoton">
+                      <button onClick={()=> this.cargarMas()}> Cargar mas</button>
+                    </section>
+                )}
                 
             </React.Fragment>
         )
