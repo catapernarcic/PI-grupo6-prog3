@@ -32,8 +32,8 @@
 
 .botones-tarjeta {
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-    flex-wrap: wrap;
 }
 
 .botones-tarjeta button {
@@ -44,6 +44,7 @@
     color: white;
     cursor: pointer;
     font-size: 0.9rem;
+    width: 100%;
 }
 
 .botones-tarjeta button:hover {
@@ -64,4 +65,28 @@
 
 .favorito-activo {
     /* Sin animación, solo el corazón rojo */
+}
+
+.botones-tarjeta .more {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.botones-tarjeta .btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.botones-tarjeta .btn-success:hover {
+    background-color: #218838;
+}
+
+.botones-tarjeta .btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.botones-tarjeta .btn-danger:hover {
+    background-color: #c82333;
 }

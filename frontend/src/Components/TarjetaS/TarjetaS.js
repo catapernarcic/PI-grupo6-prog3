@@ -28,49 +28,46 @@ export default class TarjetaS extends Component {
     });
   }
 
-  agregarFav(id){                                  
-                
-     let recuperoFav = localStorage.getItem('favTv'); 
+  agregarFav(id) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    console.log('Guardando serie favorita - img:', this.props.img);
+    const favorito = {
+      id: id,
+      nombre: this.props.nombre,
+      img: this.props.img,
+      overview: this.props.overview,
+      tipo: 'tv'
+    };
 
-    if (recuperoFav == null) {
-      var fav = [id];                            
-      var favString = JSON.stringify(fav);        
-      localStorage.setItem('favTv', favString);     
-    } else {
-      var favParceado = JSON.parse(recuperoFav);  
-      favParceado.push(id);                       
-      var favString2 = JSON.stringify(favParceado);
-      localStorage.setItem('favTv', favString2);    
+    const existeFavorito = favoritos.some(fav => fav.id === id && fav.tipo === 'tv');
+    
+    if (!existeFavorito) {
+      favoritos.push(favorito);
+      localStorage.setItem('favoritos', JSON.stringify(favoritos));
     }
 
-    this.setState({ esFav: true, favBoton: 'Sacar de favs' });
+    this.setState({ esFav: true, favBoton: 'Sacar de favoritos' });
   }       
 
-   sacaFav(id){                                     
-      var recuperoFav = localStorage.getItem('favTv'); 
-      var favParceado = JSON.parse(recuperoFav) || [];
+  sacaFav(id) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const nuevosFavoritos = favoritos.filter(fav => !(fav.id === id && fav.tipo === 'tv'));
+    localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
 
-      var filter = favParceado.filter(function (elm) {
-         return elm !== id;
-      });
-      var favString = JSON.stringify(filter);
-      localStorage.setItem('favTv', favString); 
-
-      this.setState({ esFav: false, favBoton: 'Agregar a favoritos' });
+    this.setState({ esFav: false, favBoton: 'Agregar a favoritos' });
+    
+    if (this.props.onFavoritoEliminado) {
+      this.props.onFavoritoEliminado(id, 'tv');
+    }
   } 
 
-   componentDidMount(){
-    let recuperoFav = localStorage.getItem('favTv');
-    let favParceado = [];
-    if (recuperoFav){
-      favParceado = JSON.parse(recuperoFav);
+ componentDidMount(){
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const esFavorito = favoritos.some(fav => fav.id === this.props.id && fav.tipo === 'tv');
+    
+    if (esFavorito) {
+      this.setState({ esFav: true, favBoton: 'Sacar de favoritos' });
     }
-
-    if (favParceado){
-    if (favParceado.includes(this.props.id)){   
-      this.setState({ esFav: true })
-    }
-  }
   }
 
   manejarDescripcion(){
@@ -93,14 +90,14 @@ export default class TarjetaS extends Component {
             <Link to={`/detalle/tv/${this.props.id}`}><button>Ver detalle</button></Link> 
             
             {this.state.esFav ? (
-              <button className="btn btn-danger btn-sm" onClick={() => this.sacaFav(this.props.id)}>
-                Sacar de favs
+              <button className="more btn-danger" onClick={() => this.sacaFav(this.props.id)}>
+                Sacar de favoritos
               </button>
             ) : (
-              <button className="btn btn-success r btn-sm" onClick={() => this.agregarFav(this.props.id)}>
-                Agregar a favs
+              <button className="more btn-success" onClick={() => this.agregarFav(this.props.id)}>
+                Agregar a favoritos
               </button>
-            )}
+          )}
           </div>
         </article>
       </React.Fragment>

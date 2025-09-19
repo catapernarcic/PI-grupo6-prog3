@@ -1,119 +1,156 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import './Favoritos.css';
-import Loader from "../../Components/Loader/Loader";
-import TarjetaP from "../../Components/TarjetaP/TarjetaP";
-import TarjetaS from "../../Components/TarjetaS/TarjetaS"
-
 
 class Favoritos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: [],
-      series: [],  
-      cargando: true,
-      API_KEY: "21945569abcb8b8f35ad5e0c66a9d763"
-    };
-  }
-
-
-componentDidMount() {
-    let recuperoFav = localStorage.getItem("fav"); 
-    let recuperofavS = localStorage.getItem("favTv");      
-
-   
-    
-    let idsMovies = recuperoFav ? JSON.parse(recuperoFav) : [];
-    let idsSeries = recuperofavS ? JSON.parse(recuperofavS) : [];
-
-      if (idsMovies.length === 0 && idsSeries.length === 0) {
-      this.setState({ movies: [], series: [], cargando: false }); 
-      return;
+    constructor(props) {
+        super(props);
+        this.state = {
+            favoritos: []
+        }
     }
 
-    let favMovies = [];  
-    let favSeries = [];
-    let pendientes = idsMovies.length + idsSeries.length;
-
-      idsMovies.map((id) =>
-      fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.state.API_KEY}`)
-        .then((resp) => resp.json())
-        .then((data) => {
-          favMovies.push(data);
-          this.setState({ movies: favMovies });       
-          pendientes = pendientes - 1;                  
-          if (pendientes === 0) this.setState({ cargando: false }); 
-        })
-        .catch(() => {
-          pendientes = pendientes - 1;                  
-          if (pendientes === 0) this.setState({ cargando: false });
-        })
-    );
-
-    idsSeries.map((id) =>
-      fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${this.state.API_KEY}`)
-        .then((resp) => resp.json())
-        .then((data) => {
-          favSeries.push(data);
-          this.setState({ series: favSeries });         
-          pendientes = pendientes - 1;                  
-          if (pendientes === 0) this.setState({ cargando: false }); 
-        })
-        .catch(() => {
-          pendientes = pendientes - 1;                  
-          if (pendientes === 0) this.setState({ cargando: false }); 
-        })
-    );
-}
-
-
- render() {
-    if (this.state.cargando) {
-      return <Loader />;
+    componentDidMount() {
+        this.cargarFavoritos();
+        
+        // Escuchar cambios en localStorage
+        window.addEventListener('storage', this.manejarCambioStorage);
+        
+        // También escuchar cambios del mismo tab
+        this.intervalo = setInterval(() => {
+            this.cargarFavoritos();
+        }, 1000);
     }
 
-    return (
-      <div className="favs-page">
-        <section className="favoritos-section">
-          <h2 className="favoritos-title">Películas favoritas</h2>
-          {this.state.movies.length > 0 ? (
-            <div className="favoritos-grid">
-              {this.state.movies.map((elm) => (
-                <TarjetaP
-                  key={elm.id}
-                  id={elm.id}
-                  nombre={elm.title}
-                  img={elm.poster_path}
-                  overview={elm.overview}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="sin-favoritos">No tienes películas favoritas aún.</p>
-          )}
-        </section>
+    componentWillUnmount() {
+        window.removeEventListener('storage', this.manejarCambioStorage);
+        if (this.intervalo) {
+            clearInterval(this.intervalo);
+        }
+    }
 
-        <section className="favoritos-section">
-          <h2 className="favoritos-title">Series favoritas</h2>
-          {this.state.series.length > 0 ? (
-            <div className="favoritos-grid">
-              {this.state.series.map((elm) => (
-                <TarjetaS
-                  key={elm.id}
-                  id={elm.id}
-                  nombre={elm.name}
-                  img={elm.poster_path}
-                  overview={elm.overview}
-                />
-              ))}
+    manejarCambioStorage = (e) => {
+        if (e.key === 'favoritos') {
+            this.cargarFavoritos();
+        }
+    }
+
+    cargarFavoritos = () => {
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        console.log('Favoritos cargados:', favoritos);
+        console.log('Series favoritas:', favoritos.filter(fav => fav.tipo === 'tv'));
+        this.setState({ favoritos });
+    }
+
+    eliminarFavorito = (id, tipo) => {
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        console.log('Eliminando favorito:', id, tipo);
+        console.log('Favoritos antes:', favoritos);
+        
+        const nuevosFavoritos = favoritos.filter(fav => !(fav.id === id && fav.tipo === tipo));
+        console.log('Favoritos después:', nuevosFavoritos);
+        
+        localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
+        this.setState({ favoritos: nuevosFavoritos });
+    }
+
+    render() {
+        const { favoritos } = this.state;
+        const peliculasFavoritas = favoritos.filter(fav => fav.tipo === 'movie');
+        const seriesFavoritas = favoritos.filter(fav => fav.tipo === 'tv');
+
+        return (
+            <div className="favoritos-container">
+                {/* Sección Películas Favoritas */}
+                <section className="favoritos-section">
+                    <h2 className="alert alert-primary">Películas Favoritas</h2>
+                    {peliculasFavoritas.length > 0 ? (
+                        <div className="favoritos-grid">
+                            {peliculasFavoritas.map((pelicula, idx) => (
+                                <div key={`${pelicula.id}-${idx}`} className="favorito-item">
+                                    {pelicula.img ? (
+                                        <img 
+                                            src={`https://image.tmdb.org/t/p/w500${pelicula.img}`} 
+                                            alt={pelicula.nombre}
+                                            className="favorito-img"
+                                        />
+                                    ) : (
+                                        <div className="favorito-img favorito-sin-imagen">
+                                            Sin imagen
+                                        </div>
+                                    )}
+                                    <div className="favorito-info">
+                                        <h3 className="favorito-titulo">{pelicula.nombre}</h3>
+                                        <p className="favorito-descripcion">{pelicula.overview}</p>
+                                        <div className="favorito-botones">
+                                            <Link 
+                                                to={`/detalle/movie/${pelicula.id}`} 
+                                                className="btn btn-primary btn-sm"
+                                            >
+                                                Ver Detalle
+                                            </Link>
+                                            <button 
+                                                onClick={() => this.eliminarFavorito(pelicula.id, 'movie')}
+                                                className="btn btn-danger btn-sm"
+                                            >
+                                                Sacar de favoritos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="sin-favoritos">No tienes películas favoritas aún.</p>
+                    )}
+                </section>
+
+                {/* Sección Series Favoritas */}
+                <section className="favoritos-section">
+                    <h2 className="alert alert-warning">Series Favoritas</h2>
+                    {seriesFavoritas.length > 0 ? (
+                        <div className="favoritos-grid">
+                            {seriesFavoritas.map((serie, idx) => (
+                                <div key={`${serie.id}-${idx}`} className="favorito-item">
+                                    {serie.img ? (
+                                        <img 
+                                            src={`https://image.tmdb.org/t/p/w500${serie.img}`} 
+                                            alt={serie.nombre}
+                                            className="favorito-img"
+                                        />
+                                    ) : (
+                                        <div className="favorito-img favorito-sin-imagen">
+                                            Sin imagen
+                                        </div>
+                                    )}
+                                    <div className="favorito-info">
+                                        <h3 className="favorito-titulo">{serie.nombre}</h3>
+                                        <p className="favorito-descripcion">{serie.overview}</p>
+                                        <div className="favorito-botones">
+                                            <Link 
+                                                to={`/detalle/tv/${serie.id}`} 
+                                                className="btn btn-primary btn-sm"
+                                            >
+                                                Ver Detalle
+                                            </Link>
+                                            <button 
+                                                onClick={() => this.eliminarFavorito(serie.id, 'tv')}
+                                                className="btn btn-danger btn-sm"
+                                            >
+                                                Sacar de favoritos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="sin-favoritos">No tienes series favoritas aún.</p>
+                    )}
+                </section>
             </div>
-          ) : (
-            <p className="sin-favoritos">No tienes series favoritas aún.</p>
-          )}
-        </section>
-      </div>
-    );
-  }
+        );
+    }
 }
 
 export default Favoritos;
