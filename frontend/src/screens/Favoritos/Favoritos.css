@@ -111,6 +111,25 @@
     border: 2px dashed #ddd;
 }
 
+.favs-page { 
+    padding: 12px 0; 
+}
+.favoritos-section { 
+    margin: 12px 0 24px 0; 
+}
+.favoritos-title { 
+    margin: 8px 0 12px 0; 
+}
+.favoritos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.sin-favoritos { 
+    margin: 8px 0; opacity: .8; 
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .favoritos-grid {

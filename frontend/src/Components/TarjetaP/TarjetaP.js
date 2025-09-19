@@ -9,7 +9,7 @@ export default class TarjetaP extends Component {
       mostrarDescripcion: false,
       textoDescripcion: 'Ver descripcion',
       esFav: false,
-      favBoton: 'Agregar',
+      favBoton: 'Agregar a favoritos',
       UnCharacter: props.data ? props.data : {
         id: props.id,
         image: props.img
@@ -43,7 +43,7 @@ export default class TarjetaP extends Component {
       localStorage.setItem('fav', favString2);    
     }
 
-    this.setState({ esFav: true, favBoton: 'Sacar' });
+    this.setState({ esFav: true, favBoton: 'Sacar de favs' });
   }
 
   sacaFav(id) {
@@ -56,7 +56,7 @@ export default class TarjetaP extends Component {
     var favString = JSON.stringify(filter);               
     localStorage.setItem('fav', favString);               
 
-    this.setState({ esFav: false, favBoton: 'Agregar' });
+    this.setState({ esFav: false, favBoton: 'Agregar a favoritos' });
   }
 
  componentDidMount(){
@@ -97,12 +97,12 @@ export default class TarjetaP extends Component {
               <Link to={`/detalle/movie/${this.props.id}`}><button>Ver detalle</button></Link>
               
               {this.state.esFav ? (
-            <button className="more" onClick={() => this.sacaFav(this.props.id)}>
-              Sacar
+            <button className="btn btn-danger btn-sm" onClick={() => this.sacaFav(this.props.id)}>
+              Sacar de favs
             </button>
           ) : (
-            <button className="more" onClick={() => this.agregarFav(this.props.id)}>
-              Agregar
+            <button className="btn btn-success btn-sm" onClick={() => this.agregarFav(this.props.id)}>
+              Agregar a favs
             </button>
           )}
             </div>

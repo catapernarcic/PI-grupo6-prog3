@@ -14,7 +14,7 @@ class Serie extends Component {
         <React.Fragment>
             <section className="sectionSeries">
                 {
-                    this.props.series.map((elm, idx) => <TarjetaS key={elm + idx} nombre={elm.name} img={elm.poster_path} overview={elm.overview}/>)
+                    this.props.series.map((elm, idx) => <TarjetaS key={elm + idx} id={elm.id} nombre={elm.name} img={elm.poster_path} overview={elm.overview}/>)
                 }
 
                 </section>
