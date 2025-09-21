@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
-import './footer.css'
+import React, { Component } from 'react';
+import './footer.css';
 
 export default class Footer extends Component {
   render() {
     return (
-      <div className="divF">
-        <p className="footer">Trabajo hecho por: Catalina Pernarcic, Agostina Paladino y Teodelina Lagos Marmol</p>
-      </div>
-    )
+      <footer className="app-footer"> 
+        <div className="footer-inner">
+          <p className="footer-text">
+            Trabajo hecho por: <strong>Catalina Pernarcic</strong>, <strong>Agostina Paladino</strong> y <strong>Teodelina Lagos Marmol</strong>
+          </p>
+        </div>
+      </footer>
+    );
   }
 }
