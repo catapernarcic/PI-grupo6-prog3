@@ -1,1 +1,14 @@
 /* Estilos para el componente Home */
+
+.ver-todas-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 32px;
+}
+.ver-todas-btn {
+  border-width: 2px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+.ver-todas-btn:hover { text-decoration: none; }

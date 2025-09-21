@@ -42,13 +42,23 @@ class Home extends Component{
     render(){
         return(
             <React.Fragment>
-                {/* Sección Películas Populares */}
+               
                 <h2 className="alert alert-primary">Popular movies this week</h2>
                 {this.state.cargandoPopulares ? <Loader/> : <Pelicula peliculas={this.state.peliculasPopulares.slice(0,4)}/>}
+                <div className="ver-todas-wrap"> 
+                    <Link to="/peliculas" className="btn btn-outline-primary btn-lg ver-todas-btn">
+                        Ver todas →
+                    </Link>
+                </div>
 
-                {/* Sección Películas en Cartelera */}
+               
                 <h2 className="alert alert-primary">Movies now playing</h2>
                 {this.state.cargandoCartelera ? <Loader/> : <Pelicula peliculas={this.state.peliculasCartelera.slice(0,4)}/>}
+                 <div className="ver-todas-wrap">
+                    <Link to="/series" className="btn btn-outline-primary btn-lg ver-todas-btn">
+                        Ver todas →
+                  </Link>
+                 </div>
             </React.Fragment>
         )
     }
