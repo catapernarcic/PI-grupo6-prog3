@@ -12,27 +12,6 @@ class Favoritos extends Component {
 
     componentDidMount() {
         this.cargarFavoritos();
-        
-        // Escuchar cambios en localStorage
-        window.addEventListener('storage', this.manejarCambioStorage);
-        
-        // También escuchar cambios del mismo tab
-        this.intervalo = setInterval(() => {
-            this.cargarFavoritos();
-        }, 1000);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('storage', this.manejarCambioStorage);
-        if (this.intervalo) {
-            clearInterval(this.intervalo);
-        }
-    }
-
-    manejarCambioStorage = (e) => {
-        if (e.key === 'favoritos') {
-            this.cargarFavoritos();
-        }
     }
 
     cargarFavoritos = () => {
@@ -51,7 +30,8 @@ class Favoritos extends Component {
         console.log('Favoritos después:', nuevosFavoritos);
         
         localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
-        this.setState({ favoritos: nuevosFavoritos });
+        // Recargar la lista 
+        this.cargarFavoritos();
     }
 
     render() {

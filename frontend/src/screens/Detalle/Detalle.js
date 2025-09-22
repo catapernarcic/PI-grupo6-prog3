@@ -25,7 +25,14 @@ class Detalle extends Component{
 
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
         const tipo = this.props.match.params.tipo;
-        const yaEsFav = favoritos.some(fav => fav.id === data.id && fav.tipo === tipo);  
+        
+        let yaEsFav = false;
+        for (let i = 0; i < favoritos.length; i++) {
+          if (favoritos[i].id === data.id && favoritos[i].tipo === tipo) {
+            yaEsFav = true;
+            break;
+          }
+        }  
 
         this.setState({
           pelicula: data,
@@ -52,7 +59,14 @@ class Detalle extends Component{
       tipo: tipo
     };
 
-    const existeFavorito = favoritos.some(fav => fav.id === id && fav.tipo === tipo);
+    // Verificar si ya existe usando un bucle for
+    let existeFavorito = false;
+    for (let i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].id === id && favoritos[i].tipo === tipo) {
+        existeFavorito = true;
+        break;
+      }
+    }
     
     if (!existeFavorito) {
       favoritos.push(favorito);
@@ -92,18 +106,7 @@ class Detalle extends Component{
                                 }}
                             />
                         ) : (
-                            <div className="detalle-imagen" style={{
-                                width: '100%',
-                                maxWidth: '400px',
-                                height: '600px',
-                                backgroundColor: '#f0f0f0',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: '8px',
-                                color: '#666',
-                                fontSize: '1.2rem'
-                            }}>
+                            <div className="detalle-imagen detalle-sin-imagen">
                                 Sin imagen disponible
                             </div>
                         )}

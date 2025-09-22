@@ -61,7 +61,7 @@ class Series extends Component{
                 <h1>Todas las series: </h1>
                 <FormularioP tipo="series" filtrados={(texto) => this.buscadas(texto)}/>
                 {<Serie series={this.state.series}/>}
-                {!this.state.filtrando && (
+                {(!this.state.filtrando || this.state.series.length > 4) && (
                     <section className="seccionBoton">
                       <button onClick={()=> this.cargarMas()}> Cargar mas</button>
                     </section>

@@ -39,7 +39,13 @@ export default class TarjetaS extends Component {
       tipo: 'tv'
     };
 
-    const existeFavorito = favoritos.some(fav => fav.id === id && fav.tipo === 'tv');
+    let existeFavorito = false;
+    for (let i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].id === id && favoritos[i].tipo === 'tv') {
+        existeFavorito = true;
+        break;
+      }
+    }
     
     if (!existeFavorito) {
       favoritos.push(favorito);
@@ -63,7 +69,14 @@ export default class TarjetaS extends Component {
 
  componentDidMount(){
     const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-    const esFavorito = favoritos.some(fav => fav.id === this.props.id && fav.tipo === 'tv');
+    
+    let esFavorito = false;
+    for (let i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].id === this.props.id && favoritos[i].tipo === 'tv') {
+        esFavorito = true;
+        break;
+      }
+    }
     
     if (esFavorito) {
       this.setState({ esFav: true, favBoton: 'Sacar de favoritos' });

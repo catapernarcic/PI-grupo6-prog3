@@ -68,7 +68,7 @@ class Peliculas extends Component{
                 <h1>Todas las peliculas:</h1>
                 <FormularioP tipo="peliculas" filtrados={(texto) => this.buscadas(texto)}/>
                 {<Pelicula peliculas={this.state.peliculas}/>}
-                {!this.state.filtrando && (
+                {(!this.state.filtrando || this.state.peliculas.length > 4) && (
                     <section className="seccionBoton">
                       <button onClick={()=> this.cargarMas()} className="boton"> Cargar mas</button>
                     </section>
