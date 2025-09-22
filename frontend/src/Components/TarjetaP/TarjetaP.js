@@ -8,16 +8,8 @@ export default class TarjetaP extends Component {
     this.state = {
       mostrarDescripcion: false,
       textoDescripcion: 'Ver descripcion',
-      esFav: false,
-      favBoton: 'Agregar a favoritos',
-      UnCharacter: props.data ? props.data : {
-        id: props.id,
-        image: props.img
-          ? 'https://image.tmdb.org/t/p/w500' + props.img
-          : 'https://via.placeholder.com/300x450/cccccc/666666?text=Sin+Imagen',
-        name: props.nombre,
-        overview: props.overview
-    },
+        esFav: false,
+        favBoton: 'Agregar a favoritos'
     }
   }
 
@@ -83,7 +75,7 @@ export default class TarjetaP extends Component {
         <React.Fragment>
           <article className="tarjetaP">
             <h2>{this.props.nombre}</h2>
-            <img src={this.state.UnCharacter.image} alt=""/>  
+              <img src={this.props.img ? 'https://image.tmdb.org/t/p/w500' + this.props.img : 'https://via.placeholder.com/300x450/cccccc/666666?text=Sin+Imagen'} alt=""/>
 
             {this.state.mostrarDescripcion ? <p>{this.props.overview}</p> : null}
 

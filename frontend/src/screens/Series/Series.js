@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {Link} from 'react-router-dom'
 import Serie from '../../Components/Serie/Serie'
 import FormularioP from'../../Components/FormularioP/FormularioP'
 import './series.css'
@@ -35,21 +34,44 @@ class Series extends Component{
   cargarMas(){
     fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${this.state.API_KEY}&page=${this.state.sigPag}`) 
     .then((resp) => resp.json())
-    .then((data) => this.setState({
-          series: this.state.series.concat(data.results),
-          sigPag: this.state.sigPag + 1,
-          backup: this.state.backup.concat(data.results)
-
-      }))
+        .then((data) => {
+          const nuevasSeries = this.state.series;
+          const nuevoBackup = this.state.backup;
+          
+          data.results.map((serie) => {
+            nuevasSeries.push(serie);
+            nuevoBackup.push(serie);
+            return serie;
+          });
+          
+          this.setState({
+            series: nuevasSeries,
+            sigPag: this.state.sigPag + 1,
+            backup: nuevoBackup
+          });
+        })
       .catch((error) => console.log(error))
   }
   buscadas(serieBuscada){
     const texto = serieBuscada.toLowerCase()
-    const filtrado = this.state.backup.filter( (elm) => elm.name.toLowerCase().includes(texto))
-    this.setState({
+    
+    if (texto.length === 0) {
+      // Si no hay texto de búsqueda, mostrar todas las series cargadas
+      this.setState({
+        series: this.state.backup,
+        filtrando: false
+      })
+    } else {
+      // Buscar en los elementos cargados
+      const filtrado = this.state.backup.filter( (elm) => 
+        (elm.name && elm.name.toLowerCase().includes(texto)) || 
+        (elm.title && elm.title.toLowerCase().includes(texto))
+      )
+      this.setState({
         series: filtrado,
-        filtrando: texto.length > 0
-    })
+        filtrando: true
+      });
+    }
   }
 
     render(){
@@ -60,7 +82,13 @@ class Series extends Component{
             <React.Fragment>
                 <h1>Todas las series: </h1>
                 <FormularioP tipo="series" filtrados={(texto) => this.buscadas(texto)}/>
-                {<Serie series={this.state.series}/>}
+                {this.state.series.length > 0 ? (
+                    <Serie series={this.state.series}/>
+                ) : (
+                    <div className="alert alert-warning text-center">
+                        <h3>No existe</h3>
+                    </div>
+                )}
                 {(!this.state.filtrando || this.state.series.length > 4) && (
                     <section className="seccionBoton">
                       <button onClick={()=> this.cargarMas()}> Cargar mas</button>
