@@ -14,7 +14,7 @@ class Favoritos extends Component {
         this.cargarFavoritos();
     }
 
-    cargarFavoritos = () => {
+    cargarFavoritos() {
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
         console.log('Favoritos cargados:', favoritos);
         console.log('Series favoritas:', favoritos.filter(fav => fav.tipo === 'tv'));

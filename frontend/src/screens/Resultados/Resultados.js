@@ -41,7 +41,7 @@ export default class Resultados extends Component {
             .then(respuesta => respuesta.json())
             .then(data => {
                 this.setState({
-                    peliculas: data.results || []
+                    peliculas: data.results || [],
                 });
             })
             .catch(error => {

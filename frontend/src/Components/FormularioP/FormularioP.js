@@ -11,6 +11,7 @@ class FormularioP extends Component {
     controlarForm(evento){ 
         evento.preventDefault() 
         const tipo = this.props.tipo || 'peliculas';
+        console.log('TIPO', tipo)
         this.props.history.push('/resultados/' + tipo + '/' + this.state.busqueda)
      } 
      controlarInput(evento){ 

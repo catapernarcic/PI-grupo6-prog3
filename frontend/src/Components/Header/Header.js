@@ -32,7 +32,7 @@ class Header extends Component {
                         type="text" 
                         placeholder="Buscar películas o series..." 
                         value={this.state.busqueda}
-                        onChange={this.controlarCambios}
+                        onChange={(event) => this.controlarCambios(event)}
                     />
                     <Link to={`/resultados/todo/${this.state.busqueda}`} className="btn btn-success btn-sm">Buscar</Link>
                 </form>
