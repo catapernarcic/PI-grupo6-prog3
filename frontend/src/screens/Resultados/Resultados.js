@@ -36,21 +36,29 @@ export default class Resultados extends Component {
 
     buscarContenido = (termino, tipo) => {
         if (tipo === 'todo') {
-            // Buscar tanto películas como series
-            Promise.all([
-                fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${termino}`),
-                fetch(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${termino}`)
-            ])
-            .then(responses => Promise.all(responses.map(res => res.json())))
-            .then(([moviesData, seriesData]) => {
+            // Buscar películas
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${termino}`)
+            .then(respuesta => respuesta.json())
+            .then(data => {
                 this.setState({
-                    peliculas: moviesData.results || [],
-                    series: seriesData.results || [],
+                    peliculas: data.results || []
+                });
+            })
+            .catch(error => {
+                console.log('Error buscando películas:', error);
+            });
+
+            // Buscar series
+            fetch(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${termino}`)
+            .then(respuesta => respuesta.json())
+            .then(data => {
+                this.setState({
+                    series: data.results || [],
                     cargando: false
                 });
             })
             .catch(error => {
-                console.log('Error buscando contenido:', error);
+                console.log('Error buscando series:', error);
                 this.setState({ cargando: false });
             });
         } else if (tipo === 'peliculas') {
