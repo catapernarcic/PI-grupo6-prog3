@@ -10,9 +10,7 @@ class FormularioP extends Component {
     } 
     controlarForm(evento){ 
         evento.preventDefault() 
-        const tipo = this.props.tipo || 'peliculas';
-        console.log('TIPO', tipo)
-        this.props.history.push('/resultados/' + tipo + '/' + this.state.busqueda)
+
      } 
      controlarInput(evento){ 
         this.setState({ busqueda: evento.target.value },
@@ -21,7 +19,7 @@ class FormularioP extends Component {
     } 
     render(){ 
         const tipo = this.props.tipo || 'peliculas';
-        const textoBoton = tipo === 'series' ? 'Buscar series' : 'Buscar peliculas';
+        // const textoBoton = tipo === 'series' ? 'Buscar series' : 'Buscar peliculas';
         const placeholder = tipo === 'series' ? 'Buscar series...' : 'Buscar peliculas...';
         
         return( 
@@ -32,7 +30,7 @@ class FormularioP extends Component {
                 placeholder={placeholder}
                 onChange={(evento) => this.controlarInput(evento)} 
             /> 
-            <button>{textoBoton}</button> 
+            {/* <button>{textoBoton}</button>  */}
             </form> </React.Fragment> ) 
             }
     } 
