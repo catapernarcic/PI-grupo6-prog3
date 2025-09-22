@@ -26,13 +26,7 @@ class Detalle extends Component{
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
         const tipo = this.props.match.params.tipo;
         
-        let yaEsFav = false;
-        for (let i = 0; i < favoritos.length; i++) {
-          if (favoritos[i].id === data.id && favoritos[i].tipo === tipo) {
-            yaEsFav = true;
-            break;
-          }
-        }  
+        const yaEsFav = favoritos.filter(fav => fav.id === data.id && fav.tipo === tipo).length > 0;  
 
         this.setState({
           pelicula: data,
@@ -59,14 +53,7 @@ class Detalle extends Component{
       tipo: tipo
     };
 
-    // Verificar si ya existe usando un bucle for
-    let existeFavorito = false;
-    for (let i = 0; i < favoritos.length; i++) {
-      if (favoritos[i].id === id && favoritos[i].tipo === tipo) {
-        existeFavorito = true;
-        break;
-      }
-    }
+    const existeFavorito = favoritos.filter(fav => fav.id === id && fav.tipo === tipo).length > 0;
     
     if (!existeFavorito) {
       favoritos.push(favorito);
