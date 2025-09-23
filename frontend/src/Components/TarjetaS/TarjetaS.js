@@ -25,9 +25,6 @@ export default class TarjetaS extends Component {
     console.log('Guardando serie favorita - img:', this.props.img);
     const favorito = {
       id: id,
-      nombre: this.props.nombre,
-      img: this.props.img,
-      overview: this.props.overview,
       tipo: 'tv'
     };
 

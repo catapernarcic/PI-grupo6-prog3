@@ -25,9 +25,6 @@ export default class TarjetaP extends Component {
     console.log('Guardando favorito - img:', this.props.img);
     const favorito = {
       id: id,
-      nombre: this.props.nombre,
-      img: this.props.img,
-      overview: this.props.overview,
       tipo: 'movie'
     };
 

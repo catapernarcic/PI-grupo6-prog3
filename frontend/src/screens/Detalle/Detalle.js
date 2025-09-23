@@ -47,16 +47,15 @@ class Detalle extends Component{
     
     const favorito = {
       id: id,
-      nombre: tipo === 'movie' ? this.state.pelicula.title : this.state.pelicula.name,
-      img: this.state.pelicula.poster_path,
-      overview: this.state.pelicula.overview,
       tipo: tipo
     };
+    console.log('Favorito:', favorito);
 
     const existeFavorito = favoritos.filter(fav => fav.id === id && fav.tipo === tipo).length > 0;
     
     if (!existeFavorito) {
       favoritos.push(favorito);
+      console.log('Favoritos:', favoritos);
       localStorage.setItem('favoritos', JSON.stringify(favoritos));
     }
 
